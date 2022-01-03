@@ -9,8 +9,10 @@
 
 
   <div class="keys">
-    <div data-key="65" class="key">
-      <kbd>A</kbd>
+    <div data-key="65" class="key">  
+      <!-- data-* is a data attribute to store some extra information that doesn't have any visual representation.-->
+      <kbd>A</kbd> 
+      <!-- kbd:denoting textual user input from a keyboard -->
       <span class="sound">clap</span>
     </div>
     <div data-key="83" class="key">
@@ -58,6 +60,33 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+
+// ADD EVENT LISTENER TO KEYDOWN
+// https://keycode.info/
+function playSound(e){   
+  //  The keydown event is fired whenever a key is pressed regardless of whether they produce a character value. 
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  if(!audio) return; // stop the function from running altogether
+
+  audio.currentTime = 0; // sets or returns the current position (in seconds) of the audio/video playback
+  audio.play();
+ 
+  // BY ADDING CLASS TO KEYDOWN 
+  key.classList.add('playing');
+};
+
+// LISTEN TO WHEN THE TRANSITION ENDS
+// REMOVE CLASS
+function removeTransition(e){
+  if(e.propertyName !== 'transform') return; // skip if not a transform
+  console.log(this); // what got called against
+  this.classList.remove('playing');
+};
+
+const keys = document.querySelectorAll('.key'); // return nodeList
+keys.forEach(key => key.addEventListener('transitionend', removeTransition)); // transitionend is fired when CSS transition ends.
+window.addEventListener('keydown', playSound);
 
 </script>
 

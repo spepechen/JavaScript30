@@ -18,7 +18,8 @@
 
   <style>
     html {
-      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
+      /* background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5); */
+      background: gray;
       background-size: cover;
       font-family: 'helvetica neue';
       text-align: center;
@@ -38,16 +39,17 @@
       width: 30rem;
       height: 30rem;
       border: 20px solid white;
-      border-radius: 50%;
+      border-radius: 20%;
       margin: 50px auto;
       position: relative;
       padding: 2rem;
       box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
-        inset 0 0 0 3px #EFEFEF,
-        inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
-    }
+         /* offset-x | offset-y | blur-radius | spread-radius | color */
+        0 0 0 4px yellow, 
+        inset 0 0 0 3px red, /* Inset shadows are drawn inside the border */
+        inset 0 0 20px white, 
+        0 0 20px green
+      }
 
     .clock-face {
       position: relative;
@@ -67,6 +69,7 @@
       transition: all 0.5s;
       /* ⭐ use browser built-in Bézier curve tool to find the numbers  */
       transition-timing-function: cubic-bezier(0.65, 0.05, 0.13, 1.66);
+      /* how intermediate values are calculated for transistion effects */
     }
 
   </style>
@@ -85,19 +88,25 @@
 
       const mins = now.getMinutes();
       const minsDegrees = ((mins / 60) * 360) + 90;
-      console.log(minsDegrees)
       minHand.style.transform = `rotate(${minsDegrees}deg)` // this ovrewrites the transform applied by CSS not addition
-
 
       const hrs = now.getHours();
       const hrsDegrees = ((hrs / 12) * 360) + 90;
       hrHand.style.transform = `rotate(${hrsDegrees}deg)` // this ovrewrites the transform applied by CSS not addition
-
     }
 
     // TRY: make the hands clock over instead of rewind 
 
-    setInterval( setDate, 1000);
-  </script>
+    setInterval( setDate, 1000); // setDate() won't work since the function itself doesn't return anything
+    // setInterval expects an executable function as first argument
+
+
+    // https://stackoverflow.com/questions/34563330/javascript-function-call-with-without-parentheses
+    console.log('without ()')
+    console.log(setDate) // console.log is passed a function and prints [Function]
+    console.log('with ()')
+    console.log(setDate()) // undefined, cuz nothing returns from the function
+
+</script>
 </body>
 </html>

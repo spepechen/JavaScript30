@@ -21,12 +21,18 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    /* ⭐ Define variables at root*/
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties */
+    /* Selects the root element of the document:
+   <html> in the case of HTML so the style to be 
+   applied globally across your HTML document: */
     :root{
       --base: hotpink;
       --spacing: 100px;
       --blur: 10px;
     }
-
+   
+    /* ⭐ Use variables with var(    )*/
     img{
       padding: var(--spacing);
       background: var(--base);
@@ -61,15 +67,13 @@
 
   <script>
     const inputs = document.querySelectorAll('.controls input') // return NodeList
-    console.log(inputs[0]);
 
     function handleUpdate(){
+      console.log(this);
       // this.dataset: return element with data attribute for example data-sizing here
-      const suffix = this.dataset.sizing || ''; // give it an empty fallback value
-      //console.log(this.name);
+      const suffix = this.dataset.sizing || ''; // give it an empty fallback value else it returns undefined
       // ⭐ select a CSS variable 
       // set a property of same name ie name='spacing', name='blur'
-      console.log(document.documentElement)
       // document.documentElement: return root element of the document
       document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
     }
